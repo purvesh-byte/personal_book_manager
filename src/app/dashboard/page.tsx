@@ -7,7 +7,7 @@ import Book from "@/models/Book";
 
 import LogoutButton from "@/components/LogoutButton";
 import AddBookButton from "@/components/AddBookButton";
-
+import EditBookButton from "@/components/EditBookButton";
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -188,12 +188,17 @@ const books = await Book.find({
 
         {/* Actions */}
         <div className="mt-6 flex gap-5 border-t border-gray-100 pt-4">
-          <button
-            type="button"
-            className="text-sm font-medium text-blue-600 hover:text-blue-700"
-          >
-            Edit
-          </button>
+         <EditBookButton
+  book={{
+    _id: book._id.toString(),
+    title: book.title,
+    author: book.author,
+    status: book.status,
+    rating: book.rating,
+    tags: book.tags,
+    notes: book.notes,
+  }}
+/>
 
           <button
             type="button"
