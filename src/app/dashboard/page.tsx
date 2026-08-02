@@ -1,3 +1,5 @@
+import LogoutButton from "@/components/LogoutButton";
+
 const books = [
   {
     id: 1,
@@ -20,7 +22,7 @@ const books = [
     title: "Deep Work",
     author: "Cal Newport",
     status: "Want to Read",
-    rating: 0,
+    rating: null,
     tags: ["Productivity"],
   },
   {
@@ -28,33 +30,32 @@ const books = [
     title: "The Pragmatic Programmer",
     author: "Andrew Hunt",
     status: "Reading",
-    rating: 4,
-    tags: ["Programming", "Career"],
+    rating: 5,
+    tags: ["Programming"],
   },
 ];
 
 export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900">
-      {/* Navbar */}
+      {/* NAVBAR */}
       <nav className="border-b border-gray-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
           <h1 className="text-xl font-semibold">BookShelf</h1>
 
-          <div className="flex items-center gap-5">
-            <span className="hidden text-sm text-gray-600 sm:block">
+          <div className="flex items-center gap-6">
+            <span className="hidden text-sm text-gray-700 sm:block">
               My Library
             </span>
 
-            <button className="text-sm font-medium text-gray-600 hover:text-gray-900">
-              Logout
-            </button>
+            <LogoutButton />
           </div>
         </div>
       </nav>
 
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        {/* Header */}
+      {/* CONTENT */}
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        {/* HEADER */}
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
           <div>
             <h2 className="text-3xl font-bold">My Library</h2>
@@ -64,112 +65,154 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <button className="rounded-md bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700">
+          <button
+            type="button"
+            className="rounded-md bg-blue-600 px-5 py-3 text-sm font-medium text-white hover:bg-blue-700"
+          >
             + Add Book
           </button>
         </div>
 
-        {/* Stats */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        {/* STATS */}
+        <div className="mt-10 grid gap-4 sm:grid-cols-3">
           <div className="rounded-lg border border-gray-200 bg-white p-5">
-            <p className="text-sm text-gray-500">Total Books</p>
-            <p className="mt-1 text-2xl font-semibold">4</p>
+            <p className="text-sm text-gray-600">Total Books</p>
+
+            <p className="mt-2 text-2xl font-semibold">
+              {books.length}
+            </p>
           </div>
 
           <div className="rounded-lg border border-gray-200 bg-white p-5">
-            <p className="text-sm text-gray-500">Currently Reading</p>
-            <p className="mt-1 text-2xl font-semibold">2</p>
+            <p className="text-sm text-gray-600">
+              Currently Reading
+            </p>
+
+            <p className="mt-2 text-2xl font-semibold">
+              {
+                books.filter(
+                  (book) => book.status === "Reading"
+                ).length
+              }
+            </p>
           </div>
 
           <div className="rounded-lg border border-gray-200 bg-white p-5">
-            <p className="text-sm text-gray-500">Completed</p>
-            <p className="mt-1 text-2xl font-semibold">1</p>
+            <p className="text-sm text-gray-600">
+              Completed
+            </p>
+
+            <p className="mt-2 text-2xl font-semibold">
+              {
+                books.filter(
+                  (book) => book.status === "Completed"
+                ).length
+              }
+            </p>
           </div>
         </div>
 
-        {/* Search and filters */}
-        <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        {/* SEARCH + FILTERS */}
+        <div className="mt-8 flex flex-col justify-between gap-4 md:flex-row">
           <input
             type="text"
             placeholder="Search by title or author"
-            className="w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 lg:max-w-sm"
+            className="w-full rounded-md border border-gray-300 bg-white px-4 py-3 outline-none focus:border-blue-500 md:max-w-sm"
           />
 
           <div className="flex flex-wrap gap-2">
-            {["All", "Reading", "Completed", "Want to Read"].map(
-              (filter, index) => (
-                <button
-                  key={filter}
-                  className={
-                    index === 0
-                      ? "rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white"
-                      : "rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
-                  }
-                >
-                  {filter}
-                </button>
-              )
-            )}
+            <button
+              type="button"
+              className="rounded-md bg-gray-900 px-4 py-2 text-sm text-white"
+            >
+              All
+            </button>
+
+            <button
+              type="button"
+              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm"
+            >
+              Reading
+            </button>
+
+            <button
+              type="button"
+              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm"
+            >
+              Completed
+            </button>
+
+            <button
+              type="button"
+              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm"
+            >
+              Want to Read
+            </button>
           </div>
         </div>
 
-        {/* Books */}
+        {/* BOOK CARDS */}
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           {books.map((book) => (
-            <article
+            <div
               key={book.id}
               className="rounded-lg border border-gray-200 bg-white p-6"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-lg font-semibold">{book.title}</h3>
+                  <h3 className="text-lg font-semibold">
+                    {book.title}
+                  </h3>
 
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-gray-600">
                     {book.author}
                   </p>
                 </div>
 
-                <span className="whitespace-nowrap rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700">
+                <span className="rounded-md bg-gray-100 px-3 py-1 text-xs">
                   {book.status}
                 </span>
               </div>
 
-              {/* Rating */}
-              <div className="mt-5">
-                <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              <div className="mt-6">
+                <p className="text-xs uppercase text-gray-500">
                   Rating
                 </p>
 
-                <p className="mt-1 text-sm text-gray-700">
-                  {book.rating > 0
+                <p className="mt-1 text-sm">
+                  {book.rating
                     ? `${book.rating} / 5`
                     : "Not rated"}
                 </p>
               </div>
 
-              {/* Tags */}
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-5 flex flex-wrap gap-2">
                 {book.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-600"
+                    className="rounded-md bg-gray-100 px-3 py-1 text-xs text-gray-700"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Actions */}
-              <div className="mt-6 flex gap-4 border-t border-gray-100 pt-4">
-                <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
+              <div className="mt-6 flex gap-5 border-t border-gray-100 pt-4">
+                <button
+                  type="button"
+                  className="text-sm font-medium text-blue-600"
+                >
                   Edit
                 </button>
 
-                <button className="text-sm font-medium text-red-600 hover:text-red-700">
+                <button
+                  type="button"
+                  className="text-sm font-medium text-red-600"
+                >
                   Delete
                 </button>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
