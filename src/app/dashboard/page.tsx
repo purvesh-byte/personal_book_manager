@@ -1,7 +1,10 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
 import { verifyToken } from "@/lib/auth";
+
 import LogoutButton from "@/components/LogoutButton";
+import AddBookButton from "@/components/AddBookButton";
 
 const books = [
   {
@@ -80,13 +83,9 @@ export default async function DashboardPage() {
               Keep track of the books you&apos;re reading.
             </p>
           </div>
-
-          <button
-            type="button"
-            className="rounded-md bg-blue-600 px-5 py-3 text-sm font-medium text-white hover:bg-blue-700"
-          >
-            + Add Book
-          </button>
+          <AddBookButton />
+             
+         
         </div>
 
         {/* STATS */}
