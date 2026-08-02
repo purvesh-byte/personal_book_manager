@@ -35,38 +35,38 @@ const books = await Book.find({
     <main className="min-h-screen bg-gray-50 text-gray-900">
       {/* NAVBAR */}
       <nav className="border-b border-gray-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <h1 className="text-xl font-semibold">BookShelf</h1>
+<div className="flex items-center gap-4 sm:gap-6">
+  <span className="hidden max-w-[220px] truncate text-sm text-gray-600 sm:block">
+    {user.email}
+  </span>
 
-          <div className="flex items-center gap-6">
-            <span className="hidden text-sm text-gray-700 sm:block">
-                {user.email}
-            </span>
-
-            <LogoutButton />
-          </div>
+  <LogoutButton />
+</div>
         </div>
       </nav>
 
       {/* CONTENT */}
-      <div className="mx-auto max-w-6xl px-6 py-12">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         {/* HEADER */}
-        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
-          <div>
-            <h2 className="text-3xl font-bold">My Library</h2>
+       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+  <div>
+    <h2 className="text-2xl font-bold sm:text-3xl">
+      My Library
+    </h2>
 
-            <p className="mt-2 text-gray-600">
-              Keep track of the books you&apos;re reading.
-            </p>
-          </div>
-          <AddBookButton />
-             
-         
-        </div>
+    <p className="mt-2 text-sm text-gray-600 sm:text-base">
+      Keep track of the books you&apos;re reading.
+    </p>
+  </div>
+
+  <AddBookButton />
+</div>
 
         {/* STATS */}
-<div className="mt-10 grid gap-4 sm:grid-cols-3">
 
+<div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
   {/* Total Books */}
   <div className="rounded-lg border border-gray-200 bg-white p-5">
     <p className="text-sm text-gray-600">

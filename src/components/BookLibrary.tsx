@@ -1,5 +1,5 @@
 "use client";
-
+import StatusBadge from "@/components/StatusBadge";
 import { useMemo, useState } from "react";
 import EditBookButton from "@/components/EditBookButton";
 import DeleteBookButton from "@/components/DeleteBookButton";
@@ -53,57 +53,66 @@ export default function BookLibrary({ books }: BookLibraryProps) {
 
   return (
     <>
-      {/* SEARCH */}
-      <div className="mt-8">
-        <input
-          type="text"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search by title or author"
-          className="w-full rounded-md border border-gray-300 bg-white px-4 py-3 outline-none focus:border-blue-500 md:max-w-sm"
-        />
-      </div>
+   {/* SEARCH AND FILTERS */}
+<div className="mt-8 rounded-lg border border-gray-200 bg-white p-4">
+  <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
 
-      {/* STATUS FILTERS */}
-      <div className="mt-4 flex flex-wrap gap-2">
-        {["All", "Reading", "Completed", "Want to Read"].map(
-          (status) => (
-            <button
-              key={status}
-              type="button"
-              onClick={() => setStatusFilter(status)}
-              className={
-                statusFilter === status
-                  ? "rounded-md bg-gray-900 px-4 py-2 text-sm text-white"
-                  : "rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-              }
-            >
-              {status}
-            </button>
-          )
-        )}
-      </div>
+    {/* Search */}
+    <input
+      type="text"
+      value={search}
+      onChange={(event) => setSearch(event.target.value)}
+      placeholder="Search by title or author..."
+      className="w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-500 lg:max-w-xs"
+    />
 
-      {/* TAG FILTER */}
-      {availableTags.length > 0 && (
-        <div className="mt-4">
-          <select
-            value={tagFilter}
-            onChange={(event) =>
-              setTagFilter(event.target.value)
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+
+      {/* Status */}
+      <div className="flex flex-wrap gap-2">
+        {[
+          "All",
+          "Reading",
+          "Completed",
+          "Want to Read",
+        ].map((status) => (
+          <button
+            key={status}
+            type="button"
+            onClick={() => setStatusFilter(status)}
+            className={
+              statusFilter === status
+                ? "rounded-md bg-gray-900 px-3 py-2 text-xs font-medium text-white"
+                : "rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50"
             }
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-blue-500"
           >
-            <option value="All">All Tags</option>
+            {status}
+          </button>
+        ))}
+      </div>
 
-            {availableTags.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
-            ))}
-          </select>
-        </div>
+      {/* Tags */}
+      {availableTags.length > 0 && (
+        <select
+          value={tagFilter}
+          onChange={(event) =>
+            setTagFilter(event.target.value)
+          }
+          className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 outline-none focus:border-blue-500"
+        >
+          <option value="All">All Tags</option>
+
+          {availableTags.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </select>
       )}
+
+    </div>
+  </div>
+</div>
 
       {/* RESULT COUNT */}
       <p className="mt-5 text-sm text-gray-500">
@@ -126,12 +135,12 @@ export default function BookLibrary({ books }: BookLibraryProps) {
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           {filteredBooks.map((book) => (
             <div
-              key={book._id}
-              className="rounded-lg border border-gray-200 bg-white p-6"
-            >
+  key={book._id}
+  className="rounded-lg border border-gray-200 bg-white p-5 transition-shadow hover:shadow-sm sm:p-6"
+>
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="break-words text-lg font-semibold text-gray-900">
                     {book.title}
                   </h3>
 
@@ -140,9 +149,7 @@ export default function BookLibrary({ books }: BookLibraryProps) {
                   </p>
                 </div>
 
-                <span className="whitespace-nowrap rounded-md bg-gray-100 px-3 py-1 text-xs text-gray-700">
-                  {book.status}
-                </span>
+               <StatusBadge status={book.status} />
               </div>
 
               {/* Rating */}
@@ -179,9 +186,9 @@ export default function BookLibrary({ books }: BookLibraryProps) {
                     Notes
                   </p>
 
-                  <p className="mt-1 text-sm text-gray-700">
-                    {book.notes}
-                  </p>
+                 <p className="mt-1 break-words text-sm leading-6 text-gray-700">
+  {book.notes}
+</p>
                 </div>
               )}
 
