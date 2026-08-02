@@ -8,6 +8,8 @@ import Book from "@/models/Book";
 import LogoutButton from "@/components/LogoutButton";
 import AddBookButton from "@/components/AddBookButton";
 import EditBookButton from "@/components/EditBookButton";
+import DeleteBookButton from "@/components/DeleteBookButton";
+
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -199,13 +201,10 @@ const books = await Book.find({
     notes: book.notes,
   }}
 />
-
-          <button
-            type="button"
-            className="text-sm font-medium text-red-600 hover:text-red-700"
-          >
-            Delete
-          </button>
+             <DeleteBookButton
+  bookId={book._id.toString()}
+  bookTitle={book.title}
+/>
         </div>
       </div>
     ))}
