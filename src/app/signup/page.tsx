@@ -1,9 +1,55 @@
+"use client";
+
+import { FormEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
+  const router = useRouter();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Unable to create account");
+        return;
+      }
+
+      router.push("/login?registered=true");
+    } catch {
+      setError("Unable to connect to the server");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <nav className="border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" className="text-xl font-semibold text-gray-900">
@@ -22,7 +68,6 @@ export default function SignupPage() {
         </div>
       </nav>
 
-      {/* Signup Form */}
       <div className="flex justify-center px-6 py-16">
         <div className="w-full max-w-md">
           <div className="mb-8">
@@ -35,7 +80,16 @@ export default function SignupPage() {
             </p>
           </div>
 
-          <form className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+          >
+            {error && (
+              <div className="mb-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+
             <div>
               <label
                 htmlFor="name"
@@ -47,7 +101,10 @@ export default function SignupPage() {
               <input
                 id="name"
                 type="text"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
                 placeholder="Enter your name"
+                required
                 className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-gray-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
@@ -63,7 +120,10 @@ export default function SignupPage() {
               <input
                 id="email"
                 type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
+                required
                 className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-gray-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
@@ -79,16 +139,21 @@ export default function SignupPage() {
               <input
                 id="password"
                 type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
                 placeholder="Minimum 6 characters"
+                minLength={6}
+                required
                 className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-gray-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
 
             <button
               type="submit"
-              className="mt-6 w-full rounded-md bg-blue-600 px-4 py-2.5 font-medium text-white hover:bg-blue-700"
+              disabled={loading}
+              className="mt-6 w-full rounded-md bg-blue-600 px-4 py-2.5 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-400"
             >
-              Create Account
+              {loading ? "Creating account..." : "Create Account"}
             </button>
           </form>
 
