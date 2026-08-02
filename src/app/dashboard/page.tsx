@@ -7,8 +7,7 @@ import Book from "@/models/Book";
 
 import LogoutButton from "@/components/LogoutButton";
 import AddBookButton from "@/components/AddBookButton";
-import EditBookButton from "@/components/EditBookButton";
-import DeleteBookButton from "@/components/DeleteBookButton";
+import BookLibrary from "@/components/BookLibrary";
 
 
 export default async function DashboardPage() {
@@ -113,106 +112,35 @@ const books = await Book.find({
 
         {/* BOOK CARDS */}
         {/* BOOKS */}
-<div className="mt-8 grid gap-5 md:grid-cols-2">
- {/* BOOKS */}
-{books.length === 0 ? (
-  // EMPTY STATE
-  <div className="mt-10 rounded-lg border border-dashed border-gray-300 bg-white px-6 py-16 text-center">
-    <h3 className="text-lg font-semibold text-gray-900">
-      No books yet
-    </h3>
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {/* BOOKS */}
+          {books.length === 0 ? (
+            <div className="mt-10 rounded-lg border border-dashed border-gray-300 bg-white px-6 py-16 text-center">
+              <h3 className="text-lg font-semibold text-gray-900">
+                No books yet
+              </h3>
 
-    <p className="mt-2 text-sm text-gray-600">
-      Add your first book to start building your library.
-    </p>
-  </div>
-) : (
-  // BOOK LIST
-  <div className="mt-8 grid gap-5 md:grid-cols-2">
-    {books.map((book) => (
-      <div
-        key={book._id.toString()}
-        className="rounded-lg border border-gray-200 bg-white p-6"
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900">
-              {book.title}
-            </h3>
-
-            <p className="mt-1 text-sm text-gray-600">
-              {book.author}
-            </p>
-          </div>
-
-          <span className="whitespace-nowrap rounded-md bg-gray-100 px-3 py-1 text-xs text-gray-700">
-            {book.status}
-          </span>
+              <p className="mt-2 text-sm text-gray-600">
+                Add your first book to start building your library.
+              </p>
+            </div>
+          ) : (
+            <BookLibrary
+              books={books.map((book) => ({
+                _id: book._id.toString(),
+                title: book.title,
+                author: book.author,
+                status: book.status,
+                rating: book.rating,
+                tags: book.tags,
+                notes: book.notes,
+              }))}
+            />
+          )}
         </div>
-
-        {/* Rating */}
-        <div className="mt-6">
-          <p className="text-xs uppercase tracking-wide text-gray-500">
-            Rating
-          </p>
-
-          <p className="mt-1 text-sm text-gray-800">
-            {book.rating ? `${book.rating} / 5` : "Not rated"}
-          </p>
-        </div>
-
-        {/* Tags */}
-        {book.tags.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-2">
-            {book.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-md bg-gray-100 px-3 py-1 text-xs text-gray-700"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Notes */}
-        {book.notes && (
-          <div className="mt-5">
-            <p className="text-xs uppercase tracking-wide text-gray-500">
-              Notes
-            </p>
-
-            <p className="mt-1 text-sm text-gray-700">
-              {book.notes}
-            </p>
-          </div>
-        )}
-
-        {/* Actions */}
-        <div className="mt-6 flex gap-5 border-t border-gray-100 pt-4">
-         <EditBookButton
-  book={{
-    _id: book._id.toString(),
-    title: book.title,
-    author: book.author,
-    status: book.status,
-    rating: book.rating,
-    tags: book.tags,
-    notes: book.notes,
-  }}
-/>
-             <DeleteBookButton
-  bookId={book._id.toString()}
-  bookTitle={book.title}
-/>
-        </div>
-      </div>
-    ))}
-  </div>
-)}
-
-</div>
       </div>
     </main>
   );
 }
+
+ 
