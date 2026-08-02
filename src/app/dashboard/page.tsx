@@ -1,3 +1,6 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { verifyToken } from "@/lib/auth";
 import LogoutButton from "@/components/LogoutButton";
 
 const books = [
@@ -35,7 +38,20 @@ const books = [
   },
 ];
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) {
+    redirect("/login");
+  }
+
+  const user = verifyToken(token);
+
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900">
       {/* NAVBAR */}
@@ -45,7 +61,7 @@ export default function DashboardPage() {
 
           <div className="flex items-center gap-6">
             <span className="hidden text-sm text-gray-700 sm:block">
-              My Library
+                {user.email}
             </span>
 
             <LogoutButton />
