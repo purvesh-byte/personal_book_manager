@@ -7,13 +7,15 @@ Users can create an account, securely manage their personal book collection, tra
 ## Live Demo
 ## Screenshots
 
+### Login
+
+![Login](public/screenshots/login.png)
+
+
 ### Add Book
 
 ![Add Book](public/screenshots/add-book.png)
 
-### Login
-
-![Login](public/screenshots/login.png)
 
 ### Dashboard
 
