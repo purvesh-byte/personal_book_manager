@@ -5,21 +5,20 @@ A full-stack personal book management application built with Next.js, MongoDB, a
 Users can create an account, securely manage their personal book collection, track reading status, rate books, organize them with tags, and quickly search or filter their library.
 
 ## Live Demo
+
 ## Screenshots
 
-### Login
+### Dashboard
 
-![Login](public/screenshots/login.png)
-
+![Dashboard](public/screenshots/dashboard.png)
 
 ### Add Book
 
 ![Add Book](public/screenshots/add-book.png)
 
+### Login
 
-### Dashboard
-
-![Dashboard](public/screenshots/dashboard.png)
+![Login](public/screenshots/login.png)
 
 
 
