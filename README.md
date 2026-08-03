@@ -9,16 +9,15 @@ Users can create an account, securely manage their personal book collection, tra
 
 ### Dashboard
 
-![Dashboard](public/screenshots/Dashboard1.png)
-![Dashboard](public/screenshots/Dashboard2.png)
+![Dashboard](public/screenshots/dashboard.png)
+
 ### Add Book
 
-![Add Book](public/screenshots/addBook.png)
+![Add Book](public/screenshots/add-book.png)
 
 ### Login
 
 ![Login](public/screenshots/login.png)
-
 **Live Application:** https://personal-book-manager-sage.vercel.app/
 
 ## Features
