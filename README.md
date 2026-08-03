@@ -5,6 +5,19 @@ A full-stack personal book management application built with Next.js, MongoDB, a
 Users can create an account, securely manage their personal book collection, track reading status, rate books, organize them with tags, and quickly search or filter their library.
 
 ## Live Demo
+## Screenshots
+
+### Dashboard
+
+![Dashboard](public/screenshots/Dashboard1.png)
+![Dashboard](public/screenshots/Dashboard2.png)
+### Add Book
+
+![Add Book](public/screenshots/addBook.png)
+
+### Login
+
+![Login](public/screenshots/login.png)
 
 **Live Application:** https://personal-book-manager-sage.vercel.app/
 
